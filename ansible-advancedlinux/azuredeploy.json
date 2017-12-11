@@ -520,9 +520,9 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "14.04.3-LTS",
+            "publisher": "OpenLogic",
+            "offer": "CentOS",
+            "sku": "7.3",
             "version": "latest"
           },
           "osDisk": {
