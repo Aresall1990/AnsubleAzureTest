@@ -119,7 +119,7 @@ function configure_ssh()
     then
         #restart sshd service - Ubuntu
         service ssh restart
-    elif [[ "${DIST}" == "CentOS" ]] ;
+    elif [[ "${DIST}" == "CentOS Linux" ]] ;
     then
         # configure SELinux
         restorecon -Rv ~/.ssh
@@ -139,18 +139,19 @@ function get_sshkeys()
     then
         apt-get --yes --force-yes update
         apt-get --yes --force-yes install python-pip
-    elif [[ "${DIST}" == "CentOS" ]] ;
+    elif [[ "${DIST}" == "CentOS Linux" ]] ;
     then
-        wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-        rpm -ivh epel-release-6-8.noarch.rpm
-        yum -y install python-pip
+       # wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        yum -y install python36u-pip
     fi
 
     # Install Python Azure Storage SDK
-    pip install azure-storage
+    
+    pip3.6 install azure-storage
 
     # Download Public Key
-    python GetSSHFromPrivateStorageAccount.py  ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa.pub
+    python3.6 GetSSHFromPrivateStorageAccount.py  ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa.pub
 
 }
 
@@ -164,9 +165,9 @@ function ConfigureSSH()
     then
         log "INFO:Configuring root loging for Ubuntu"
         configure_ssh
-    elif [[ "${DIST}" == "CentOS" ]] ;
+    elif [[ "${DIST}" == "CentOS Linux" ]] ;
     then
-        log "INFO:Configuring root loging for CentOS"
+        log "INFO:Configuring root loging for CentOS Linux"
         configure_ssh
     else
          log "ERROR:Unsupported OS ${DIST}"

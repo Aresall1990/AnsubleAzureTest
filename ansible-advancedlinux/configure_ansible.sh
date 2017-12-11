@@ -170,13 +170,21 @@ function install_ansible_ubuntu()
  {
 
     # install EPEL Packages - sshdpass
-    wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-    rpm -ivh epel-release-6-8.noarch.rpm
+    # wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    # rpm -ivh epel-release-6-8.noarch.rpm
+    yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+    yum -y install python36u-pip
+
+    
+    
     # install python
-    yum -y install python-pip
+    #yum -y install python-pip
 
     # install ansible
-    yum -y install ansible
+    # yum -y install ansible
+
+    pip3.6 install ansible
+
     yum install -y libselinux-python
 
     # needed to copy the keys to all the vms
@@ -191,12 +199,12 @@ function install_ansible_ubuntu()
  function get_sshkeys()
  {
     log "INFO:Retrieving ssh keys from Azure Storage"
-    pip install -U pip setuptools
-    pip install azure-storage
+    #pip install -U pip setuptools
+    pip3.6 install azure-storage
 
     # Download both Private and Public Key
-    python GetSSHFromPrivateStorageAccount.py ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa
-    python GetSSHFromPrivateStorageAccount.py ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa.pub
+    python3.6 GetSSHFromPrivateStorageAccount.py ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa
+    python3.6 GetSSHFromPrivateStorageAccount.py ${SSH_AZ_ACCOUNT_NAME} ${SSH_AZ_ACCOUNT_KEY} id_rsa.pub
 
 }
 
@@ -224,11 +232,11 @@ function configure_ssh()
         #restart sshd service - Ubuntu
         service ssh restart
 
-    elif [[ "${DIST}" == "CentOS" ]] ; then
+    elif [[ "${DIST}" == "CentOS Linux" ]] ; then
         # configure SELinux
         restorecon -Rv ~/.ssh
 
-        #restart sshd service - CentOS
+        #restart sshd service - CentOS Linux
         service sshd restart
     fi
 
@@ -278,8 +286,8 @@ InitializeVMs()
     then
         log "INFO:Installing Ansible for Ubuntu"
         install_ansible_ubuntu
-    elif [[ "${DIST}" == "CentOS" ]] ; then
-        log "INFO:Installing Ansible for CentOS"
+    elif [[ "${DIST}" == "CentOS Linux" ]] ; then
+        log "INFO:Installing Ansible for CentOS Linux"
         install_ansible_centos
     else
        log "ERROR:Unsupported OS ${DIST}"
