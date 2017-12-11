@@ -135,7 +135,7 @@
     "scriptsBaseUrl": "https://raw.githubusercontent.com/Aresall1990/AnsubleAzureTest/master/ansible-advancedlinux/",
     "apiVersion": "2015-06-15",
     "vmStorageAccountContainerName": "vhds",
-    "createRAID": "true",
+    "createRAID": "false",
     "availabilitySetName": "ANS01",
     "faultDomainCount": "3",
     "updateDomainCount": "10",

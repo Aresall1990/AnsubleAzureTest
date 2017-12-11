@@ -245,6 +245,13 @@ function configure_ssh()
 
  function configure_ansible()
  {
+    mkdir /etc/ansible 
+    chmod 755 /etc/ansible 
+    touch /etc/ansible/hosts
+    chmod 755 /etc/ansible/hosts
+    touch /etc/ansible/ansible.cfg
+    chmod 755 /etc/ansible/ansible.cfg
+
     # Copy ansible hosts file
     ANSIBLE_HOST_FILE=/etc/ansible/hosts
     ANSIBLE_CONFIG_FILE=/etc/ansible/ansible.cfg
@@ -298,7 +305,7 @@ InitializeVMs()
     configure_ssh
 
     configure_ansible
-    configure_storage
+    #configure_storage
 
 
 }
